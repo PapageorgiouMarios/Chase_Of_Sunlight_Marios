@@ -13,6 +13,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackCooldown; // χρόνος χαλάρωσης του παίχτη για να αποφύγουμε συνεχόμενη κίνηση
     private float cooldownTimer = Mathf.Infinity;
 
+    public Transform attackPos;
+    public float attackRange;
+    public LayerMask whoIsEnemy;
+    public int damage;
+
     private void Awake()
     {
         player_attack_animator = GetComponent<Animator>();
@@ -20,18 +25,46 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0) && // όταν ο παίχτης πατήσει αριστερό κλικ στο ποντίκι του
-            cooldownTimer > attackCooldown) // και ο χρόνος χαλάρωσης έχει περάσει 
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whoIsEnemy);
+
+        if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown)
         {
-            Attack(); // εκτελούμε επίθεση
+            Attack();
+
+            for (int i = 0; i < enemiesToDamage.Length; i++)
+            {
+                if (enemiesToDamage[i] != null)
+                {
+                    EnemyLife enemyLife = enemiesToDamage[i].GetComponent<EnemyLife>();
+
+                    if (enemyLife != null)
+                    {
+                        enemyLife.ReceiveDamage(damage);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("EnemyLife component not found on enemy!");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Enemy reference is null!");
+                }
+            }
         }
 
-        cooldownTimer += Time.deltaTime; // δίνουμε χρόνο χαλάρωσης
+        cooldownTimer += Time.deltaTime;
     }
 
-    private void Attack() 
+    private void Attack()
     {
         player_attack_animator.SetTrigger("attack"); // εκτελούμε sword swing animation
         cooldownTimer = 0; // ξεκινάμε τη μέτρηση χρόνου χαλάρωσης
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(attackPos.position, attackRange);
     }
 }
