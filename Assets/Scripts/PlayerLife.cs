@@ -89,6 +89,17 @@ public class PlayerLife : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + hp, 0, starting_health);
     }
 
+    public void Respawn() 
+    {
+        player_body.bodyType = RigidbodyType2D.Dynamic;
+        player_collider.enabled = true;
+        AddHealth(starting_health);
+        Debug.Log("Respawn!!!");
+        death_animator.ResetTrigger("death");
+        death_animator.SetInteger("state", 0);
+        StartCoroutine(iFramesActivation());
+    }
+
     private void Die() 
     {
         player_body.bodyType = RigidbodyType2D.Static;

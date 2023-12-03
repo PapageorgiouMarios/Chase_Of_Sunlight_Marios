@@ -1,22 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * Η PlayerAttack χρησιμοποιείται για την επίθεση του παίχτη
- * χρησιμοποιώντας το αριστερό κλικ του ποντικιού, ο παίχτης 
- * χτυπάει με το σπαθί του
- */
 public class PlayerAttack : MonoBehaviour
 {
     private Animator player_attack_animator;
-    [SerializeField] private float attackCooldown; // χρόνος χαλάρωσης του παίχτη για να αποφύγουμε συνεχόμενη κίνηση
+    [SerializeField] private float attackCooldown;
     private float cooldownTimer = Mathf.Infinity;
 
     public Transform attackPos;
     public float attackRange;
     public LayerMask whoIsEnemy;
     public int damage;
+
+    private float dirX;
 
     private void Awake()
     {
@@ -25,7 +20,18 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        dirX = Input.GetAxisRaw("Horizontal");
+
         Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whoIsEnemy);
+
+        if (dirX > 0) 
+        {
+            attackPos.position = transform.position + new Vector3(1f, 0f, 0f);
+        }
+        else if (dirX < 0) 
+        {
+            attackPos.position = transform.position + new Vector3(-1f, 0f, 0f);
+        }
 
         if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown)
         {
@@ -58,8 +64,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        player_attack_animator.SetTrigger("attack"); // εκτελούμε sword swing animation
-        cooldownTimer = 0; // ξεκινάμε τη μέτρηση χρόνου χαλάρωσης
+        player_attack_animator.SetTrigger("attack"); 
+        cooldownTimer = 0;
     }
 
     private void OnDrawGizmosSelected()

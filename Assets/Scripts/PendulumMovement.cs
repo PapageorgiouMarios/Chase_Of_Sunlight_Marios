@@ -1,27 +1,33 @@
 using UnityEngine;
 
 /*
- * Η PendulumMovement χρησιμοποιείται για να δώσει κίνηση στην παγίδα εκκρεμούς (pendulum)
- * Η παγίδα αυτή εκτελεί κίνηση σε οριζόντιο άξονα και προσπερνάται μόνο αν ο παίχτης 
- * περιμένει το εκκρεμές να ανέβει στο τέτοιο ύψος όπου θα προλάβει να το προσπεράσει
+ * PendulumMovement: Script to object "Pendulum Blade" which is inside the "Pendulum" object
+ * 
+ * Parameters: pendulum_body -> RigidBody of the Pendulum
+ *             leftPushRange -> Left limit of the pendulum
+ *             rightPushRange -> Right limit of the pendulum
+ *             velocityThreshold -> Sets the angular velocity of the Pendulum
+ * 
+ * Usage: Moves the pendulum trap right and left
+ *        
  */
+
 public class PendulumMovement : MonoBehaviour
 {
     public Rigidbody2D pendulum_body;
-    public float leftPushRange; // όριο από αριστερά
-    public float rightPushRange; // όριο από δεξιά
-    public float velocityThreshold; // γωνία εκκρεμούς
+    public float leftPushRange; 
+    public float rightPushRange; 
+    public float velocityThreshold;
 
     private void Start()
     {
         pendulum_body = GetComponent<Rigidbody2D>();
-        pendulum_body.angularVelocity = velocityThreshold; // ορισμένο στις 160 μοίρες
+        pendulum_body.angularVelocity = velocityThreshold;
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        Push(); // δώσε ώθηση στο εκκρεμές
+        Push(); // updates the angular velocity of the pendulum
     }
     private void Push() 
     {

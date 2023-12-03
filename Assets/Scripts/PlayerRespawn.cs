@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class PlayerRespawn : MonoBehaviour
+{
+    private Transform current_checkpoint;
+    private PlayerLife player_life;
+
+
+    private void Awake()
+    {
+        player_life = GetComponent<PlayerLife>(); 
+    }
+
+    private void RespawnAgain() 
+    {
+        Debug.Log("RespawnAgain Activate!!!!!");
+
+        transform.position = new Vector3(current_checkpoint.position.x, current_checkpoint.position.y + 1, 
+            current_checkpoint.position.z);
+        player_life.Respawn();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Checkpoint") 
+        {
+            current_checkpoint = collision.transform;
+            collision.GetComponent<Collider2D>().enabled = false;
+            collision.GetComponent<Animator>().SetTrigger("reached");
+        }
+    }
+}
