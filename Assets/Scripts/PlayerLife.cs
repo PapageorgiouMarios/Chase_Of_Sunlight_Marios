@@ -67,6 +67,12 @@ public class PlayerLife : MonoBehaviour
         else if (currentHealth == 0)
         {
             Die();
+
+            if(chances != 0) 
+            {
+                chances = chances - 1;
+            }
+            extra_lives.text = "x" + (chances - 1);
         }
 
     }
@@ -111,7 +117,6 @@ public class PlayerLife : MonoBehaviour
         player_body.bodyType = RigidbodyType2D.Static;
         player_collider.enabled = false;
         death_animator.SetTrigger("death");
-        chances -= 1;
     }
 
     private void RestartLevel() 

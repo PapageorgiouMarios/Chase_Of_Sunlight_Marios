@@ -1,3 +1,4 @@
+using System.Data;
 using UnityEngine;
 
 public class PlayerRespawn : MonoBehaviour
@@ -12,11 +13,14 @@ public class PlayerRespawn : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
     }
 
+
     private void RespawnAgain() 
     {
         if(player_life.chances == 0) 
         {
-            uiManager.GameOver(); /// 3:10 VIDEO RESUME HERE
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            uiManager.GameOver();
+            player.SetActive(false);
             return;
         }
         else 

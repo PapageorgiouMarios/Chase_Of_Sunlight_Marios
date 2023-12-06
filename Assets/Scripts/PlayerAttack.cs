@@ -4,6 +4,7 @@ public class PlayerAttack : MonoBehaviour
 {
     private Animator player_attack_animator;
     [SerializeField] private float attackCooldown;
+    [SerializeField] private AudioClip attackSound;
     private float cooldownTimer = Mathf.Infinity;
 
     public Transform attackPos;
@@ -64,8 +65,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        player_attack_animator.SetTrigger("attack"); 
+        player_attack_animator.SetTrigger("attack");
         cooldownTimer = 0;
+    }
+
+    public void PlayAttackSound() 
+    {
+        SoundManager.instance.PlaySound(attackSound);
     }
 
     private void OnDrawGizmosSelected()
