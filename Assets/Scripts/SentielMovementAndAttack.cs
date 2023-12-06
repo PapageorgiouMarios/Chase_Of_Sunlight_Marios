@@ -16,10 +16,22 @@ public class SentielMovementAndAttack : MonoBehaviour
     public float attackRate = 3f; // attackRate in seconds
     private float nextAttackTime;
 
+    private BoxCollider2D sentiel_collider;
+
     void Start()
     {
         sentielAnimator = GetComponent<Animator>();
         previousPosition = transform.position;
+        
+        sentiel_collider = GetComponent<BoxCollider2D>();
+        if (sentiel_collider != null)
+        {
+
+            sentiel_collider.enabled = false; // forever false
+            sentiel_collider.isTrigger = false;
+            Debug.Log("sentiel_collider.enabled: " + sentiel_collider.enabled);
+            Debug.Log("sentiel_collider.isTrigger: " + sentiel_collider.isTrigger);            
+        }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
@@ -43,12 +55,12 @@ public class SentielMovementAndAttack : MonoBehaviour
             spriteRenderer.flipX = !isMovingRight;
             sentielAnimator.SetBool("walking", true);
             // sentielAnimator.SetBool("attack", false);
-            Debug.Log("moving");
+            //Debug.Log("moving");
         }
         else
         {
             sentielAnimator.SetBool("walking", false);
-            Debug.Log("idle");
+            //Debug.Log("idle");
         }
 
         // Update the previous position for the next frame
@@ -88,5 +100,27 @@ public class SentielMovementAndAttack : MonoBehaviour
         sentielAnimator.SetBool("attack", true);    // Set the attack animation state
         yield return new WaitForSeconds(duration);  // Wait for the specified duration
         sentielAnimator.SetBool("attack", false);   // Return to the original animation state
+    }
+
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("sentiel_collider.isTrigger: " + sentiel_collider.isTrigger);
+        Debug.Log("manage the collisioooooooooooooooooooooooooooooooooooooooooooooooooooon");
+    }
+
+    private void activateAttack()
+    {
+        Debug.Log("attack is activated");
+        sentiel_collider.enabled = true;
+        sentiel_collider.isTrigger = true;
+    }
+    
+    private void deactivateAttack()
+    {
+        Debug.Log("attack is turned off");
+        sentiel_collider.enabled = false;
+        sentiel_collider.isTrigger = false;
     }
 }
