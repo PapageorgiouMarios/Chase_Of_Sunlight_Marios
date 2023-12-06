@@ -16,21 +16,36 @@ public class SentielMovementAndAttack : MonoBehaviour
     public float attackRate = 3f; // attackRate in seconds
     private float nextAttackTime;
 
-    private BoxCollider2D sentiel_collider;
+    private BoxCollider2D[] sentiel_collider;
+    private bool isMovingRight;
 
     void Start()
     {
         sentielAnimator = GetComponent<Animator>();
         previousPosition = transform.position;
-        
-        sentiel_collider = GetComponent<BoxCollider2D>();
+
+        sentiel_collider = GetComponents<BoxCollider2D>();
+
+        // sentiel_collider2 = transform.GetChild(0).GetComponent<BoxCollider2D>(); // Assuming the second collider is a child
         if (sentiel_collider != null)
         {
+            Debug.Log("SIZE TOU COLLIDER: " + sentiel_collider.Length);
+            Debug.Log("SIZE TOU COLLIDER: " + sentiel_collider[0].size); // 0 = right collider
+            Debug.Log("SIZE TOU COLLIDER: " + sentiel_collider[1].size); // 1 = left collider
+            
+            Debug.Log("isTrigger col[0]: " + sentiel_collider[0].isTrigger);
+            Debug.Log("isTrigger col[1]: " + sentiel_collider[1].isTrigger);
+            
+            Debug.Log("enabled col[0]: " + sentiel_collider[0].enabled);
+            Debug.Log("enabled col[1]: " + sentiel_collider[1].enabled);
 
-            sentiel_collider.enabled = false; // forever false
-            sentiel_collider.isTrigger = false;
-            Debug.Log("sentiel_collider.enabled: " + sentiel_collider.enabled);
-            Debug.Log("sentiel_collider.isTrigger: " + sentiel_collider.isTrigger);            
+            sentiel_collider[0].isTrigger = false;
+            sentiel_collider[1].isTrigger = false;
+            
+            sentiel_collider[0].enabled = false;
+            sentiel_collider[1].enabled = false;
+
+            
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -49,7 +64,7 @@ public class SentielMovementAndAttack : MonoBehaviour
         if (movementDirection.magnitude > 0.01f && !sentielAnimator.GetBool("attack"))
         {
             // Determine the direction (left or right) based on the x component of the movement direction
-            bool isMovingRight = movementDirection.x > 0;
+            isMovingRight = movementDirection.x > 0;
 
             // Flip the sprite based on the movement direction
             spriteRenderer.flipX = !isMovingRight;
@@ -106,21 +121,32 @@ public class SentielMovementAndAttack : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("sentiel_collider.isTrigger: " + sentiel_collider.isTrigger);
-        Debug.Log("manage the collisioooooooooooooooooooooooooooooooooooooooooooooooooooon");
+        // manage the collision
+        Debug.Log("manage the collisioooooooooooooooooooooooooooooooooooooooooooooooooooon1");
     }
 
     private void activateAttack()
     {
-        Debug.Log("attack is activated");
-        sentiel_collider.enabled = true;
-        sentiel_collider.isTrigger = true;
+        if (isMovingRight)
+        {
+            sentiel_collider[0].enabled = true;
+            sentiel_collider[0].isTrigger = true;
+            Debug.Log("attack is activated at right");
+        }
+        else
+        {
+            sentiel_collider[1].enabled = true;
+            sentiel_collider[1].isTrigger = true;
+            Debug.Log("attack is activated at left");
+        }
     }
     
     private void deactivateAttack()
     {
         Debug.Log("attack is turned off");
-        sentiel_collider.enabled = false;
-        sentiel_collider.isTrigger = false;
+        sentiel_collider[0].isTrigger = false;
+        sentiel_collider[1].isTrigger = false;
+        sentiel_collider[0].enabled = false;
+        sentiel_collider[1].enabled = false;
     }
 }
