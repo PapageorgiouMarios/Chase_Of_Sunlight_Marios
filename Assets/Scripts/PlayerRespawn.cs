@@ -4,20 +4,28 @@ public class PlayerRespawn : MonoBehaviour
 {
     private Transform current_checkpoint;
     private PlayerLife player_life;
-
+    private UIManager uiManager;
 
     private void Awake()
     {
         player_life = GetComponent<PlayerLife>(); 
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     private void RespawnAgain() 
     {
-        Debug.Log("RespawnAgain Activate!!!!!");
-
-        transform.position = new Vector3(current_checkpoint.position.x, current_checkpoint.position.y + 1, 
+        if(player_life.chances == 0) 
+        {
+            uiManager.GameOver(); /// 3:10 VIDEO RESUME HERE
+            return;
+        }
+        else 
+        {
+            transform.position = new Vector3(current_checkpoint.position.x, current_checkpoint.position.y + 1,
             current_checkpoint.position.z);
-        player_life.Respawn();
+
+            player_life.Respawn();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

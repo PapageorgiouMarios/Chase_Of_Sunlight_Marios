@@ -43,13 +43,13 @@ public class PlayerAttack : MonoBehaviour
                 {
                     EnemyLife enemyLife = enemiesToDamage[i].GetComponent<EnemyLife>();
 
-                    if (enemyLife != null)
+                    if (enemyLife != null && enemyLife.frames_activated == false)
                     {
                         enemyLife.ReceiveDamage(damage);
                     }
                     else
                     {
-                        Debug.LogWarning("EnemyLife component not found on enemy!");
+                        Debug.Log("Enemy's IFrames activated!!!!!");
                     }
                 }
                 else

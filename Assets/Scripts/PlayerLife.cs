@@ -1,12 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
     public int starting_health = 3;
     public int currentHealth { get; private set; }
+    public int chances = 4;
 
     private Rigidbody2D player_body;
     private Animator death_animator;
@@ -15,8 +16,10 @@ public class PlayerLife : MonoBehaviour
 
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
+    [SerializeField] private Text extra_lives;
 
     private bool hurt = false;
+    public bool frames_activated = false;
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class PlayerLife : MonoBehaviour
         death_animator = GetComponent<Animator>();
         player_collider = GetComponent<BoxCollider2D>();
         player_sprite_rend = GetComponent<SpriteRenderer>();
+        extra_lives.text = "x" + (chances - 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -45,7 +49,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    private void TakeDamage(int damage) 
+    public void TakeDamage(int damage) 
     {
         Debug.Log("Player takes damage!");
         Debug.Log("Player current health: " + currentHealth);
@@ -69,6 +73,7 @@ public class PlayerLife : MonoBehaviour
 
     private IEnumerator iFramesActivation() 
     {
+        frames_activated = true;
         Physics2D.IgnoreLayerCollision(7, 8, true);
         Physics2D.IgnoreLayerCollision(7, 9, true);
         for(int i = 0; i < numberOfFlashes; i++) 
@@ -81,6 +86,7 @@ public class PlayerLife : MonoBehaviour
         }
         Physics2D.IgnoreLayerCollision(7, 8, false);
         Physics2D.IgnoreLayerCollision(7, 9, false);
+        frames_activated = false;
 
     }
 
@@ -105,6 +111,7 @@ public class PlayerLife : MonoBehaviour
         player_body.bodyType = RigidbodyType2D.Static;
         player_collider.enabled = false;
         death_animator.SetTrigger("death");
+        chances -= 1;
     }
 
     private void RestartLevel() 
