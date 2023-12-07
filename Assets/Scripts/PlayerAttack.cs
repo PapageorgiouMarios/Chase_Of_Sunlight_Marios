@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * Η PlayerAttack χρησιμοποιείται για την επίθεση του παίχτη
- * χρησιμοποιώντας το αριστερό κλικ του ποντικιού, ο παίχτης 
- * χτυπάει με το σπαθί του
- */
 public class PlayerAttack : MonoBehaviour
 {
     private Animator player_attack_animator;
-    [SerializeField] private float attackCooldown; // χρόνος χαλάρωσης του παίχτη για να αποφύγουμε συνεχόμενη κίνηση
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private AudioClip attackSound;
     private float cooldownTimer = Mathf.Infinity;
+
+    public Transform attackPos;
+    public float attackRange;
+    public LayerMask whoIsEnemy;
+    public int damage;
+
+    private float dirX;
 
     private void Awake()
     {
@@ -20,18 +21,62 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButton(0) && // όταν ο παίχτης πατήσει αριστερό κλικ στο ποντίκι του
-            cooldownTimer > attackCooldown) // και ο χρόνος χαλάρωσης έχει περάσει 
+        dirX = Input.GetAxisRaw("Horizontal");
+
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whoIsEnemy);
+
+        if (dirX > 0) 
         {
-            Attack(); // εκτελούμε επίθεση
+            attackPos.position = transform.position + new Vector3(1f, 0f, 0f);
+        }
+        else if (dirX < 0) 
+        {
+            attackPos.position = transform.position + new Vector3(-1f, 0f, 0f);
         }
 
-        cooldownTimer += Time.deltaTime; // δίνουμε χρόνο χαλάρωσης
+        if (Input.GetMouseButton(0) && cooldownTimer > attackCooldown)
+        {
+            Attack();
+
+            for (int i = 0; i < enemiesToDamage.Length; i++)
+            {
+                if (enemiesToDamage[i] != null)
+                {
+                    EnemyLife enemyLife = enemiesToDamage[i].GetComponent<EnemyLife>();
+
+                    if (enemyLife != null && enemyLife.frames_activated == false)
+                    {
+                        enemyLife.ReceiveDamage(damage);
+                    }
+                    else
+                    {
+                        Debug.Log("Enemy's IFrames activated!!!!!");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Enemy reference is null!");
+                }
+            }
+        }
+
+        cooldownTimer += Time.deltaTime;
     }
 
-    private void Attack() 
+    private void Attack()
     {
-        player_attack_animator.SetTrigger("attack"); // εκτελούμε sword swing animation
-        cooldownTimer = 0; // ξεκινάμε τη μέτρηση χρόνου χαλάρωσης
+        player_attack_animator.SetTrigger("attack");
+        cooldownTimer = 0;
+    }
+
+    public void PlayAttackSound() 
+    {
+        SoundManager.instance.PlaySound(attackSound);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(attackPos.position, attackRange);
     }
 }

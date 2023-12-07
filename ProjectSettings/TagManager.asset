@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - Trap
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Trap
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 3242473475
+    locked: 0
+  - name: OverBackground
+    uniqueID: 3286985523
     locked: 0
   - name: Default
     uniqueID: 0

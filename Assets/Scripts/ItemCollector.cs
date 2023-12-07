@@ -1,25 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 /*
- * H ItemCollector χρησιμοποιείται για να δείχνει στον παίχτη 
- * πόσα coins έχει συλλέξει κατά τη διάρκεια του παιχνιδιού.
- * Το κείμενο Text που φαίνεται πάνω αριστερά στην οθόνη είναι στον Canvas
+ * ItemCollector: Script to object "Player"
+ * 
+ * Parameters: "How Many Coins" text object
+ * 
+ * Usage: Collectables system. When the player gets a coin 
+ *        the text upper-left shows how many of them are collected in total      
+ *        
  */
+
 public class ItemCollector : MonoBehaviour
 {
-    private int coins = 0; // Με πόσα coins ξεκινάμε
-    [SerializeField] private Text HowManyCoins; // Το κείμενο του Canvas
+    private int coins = 0; // Number of coins collected
+    [SerializeField] private Text HowManyCoins; // Text shown upper left 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Coin")) // Όταν γίνεται collision με το Coin object
+        if (collision.gameObject.CompareTag("Coin")) // When the player finds a coin
         {
-            Destroy(collision.gameObject); // αφαιρούμε το αντικείμενο από το παιχνίδι
-            coins++; // το προσθέτουμε μαζί με όσα έχουμε συλλέξει
-            HowManyCoins.text = "Coins: " + coins; // αλλάζουμε το κείμενο του Canvas σύμφωνα με όσα coins συλλέξαμε
+            Destroy(collision.gameObject); // we remove the object from the game
+            coins++; // add the coin to the collection 
+            HowManyCoins.text = "Coins: " + coins; // update the text showing all coins
         }
     }
 }
