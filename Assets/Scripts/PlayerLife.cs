@@ -18,6 +18,9 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] private int numberOfFlashes;
     [SerializeField] private Text extra_lives;
 
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip deathSound;
+
     private bool hurt = false;
     public bool frames_activated = false;
 
@@ -62,6 +65,7 @@ public class PlayerLife : MonoBehaviour
         if (currentHealth > 0)
         {
             death_animator.SetTrigger("hurt");
+            SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(iFramesActivation());
         }
         else if (currentHealth == 0)
@@ -72,7 +76,15 @@ public class PlayerLife : MonoBehaviour
             {
                 chances = chances - 1;
             }
-            extra_lives.text = "x" + (chances - 1);
+
+            if(chances - 1 == -1) 
+            {
+                extra_lives.text = "x0";
+            }
+            else 
+            {
+                extra_lives.text = "x" + (chances - 1);
+            }
         }
 
     }
@@ -116,6 +128,7 @@ public class PlayerLife : MonoBehaviour
     {
         player_body.bodyType = RigidbodyType2D.Static;
         player_collider.enabled = false;
+        SoundManager.instance.PlaySound(deathSound);
         death_animator.SetTrigger("death");
     }
 
