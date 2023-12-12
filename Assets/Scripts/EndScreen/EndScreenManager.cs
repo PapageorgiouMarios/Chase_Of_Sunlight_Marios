@@ -11,25 +11,17 @@ public class EndScreenManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(" ----------------------------- Hello from endscene");
         timer = 0f;
     }
 
 
-    // Update is called once per frame
     void Update()
     {
-        
-            // Increment the timer
-            timer += Time.deltaTime;
-
-            // If the timer exceeds the duration, switch back to the first scene
-            if (timer >= duration)
-            {
-                SceneManager.LoadScene(0);
-                timer = 0f;
-            }
-        
+        timer += Time.deltaTime;
+        if (timer >= duration)
+        {
+            SceneManager.LoadScene(0);
+            timer = 0f;
+        }
     }
-
 }
