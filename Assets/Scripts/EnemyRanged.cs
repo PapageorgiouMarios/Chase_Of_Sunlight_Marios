@@ -26,7 +26,7 @@ public class EnemyRanged : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer > 2 && player.GetComponent<PlayerLife>().currentHealth != 0)
+            if (timer > 1 && player.GetComponent<PlayerLife>().currentHealth != 0)
             {
                 serpent_sage_anim.SetTrigger("shoot");
                 timer = 0;

@@ -1,14 +1,28 @@
 using UnityEngine;
 
+/*
+ * EnemyPatrol is used from Melee Enemies. There are two waypoints on opposite sides
+ * the enemy walks between these two waypoints
+ */
+
 public class EnemyPatrol : MonoBehaviour
 {
+    [Header("Left edge")]
     [SerializeField] private Transform leftEdge;
+
+    [Header("Right edge")]
     [SerializeField] private Transform rightEdge;
+
+    [Header("Whose position it takes?")]
     [SerializeField] private Transform enemy;
+
+    [Header("How much fast the enemy patrols?")]
     [SerializeField] public float speed;
 
+    [Header("How long the enemy stays put when they reach waypoint?")]
     [SerializeField] private float standing_duration;
-    private float standing_timer;
+
+    private float standing_timer; // time counter 
 
     private Vector3 scale;
     private bool left;

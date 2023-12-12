@@ -1,21 +1,30 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ *  EnemyLife is responsible for every enemy's health.
+ *  Each enemy is given health points (hp). When they reach 0, they are eliminated
+ */
 public class EnemyLife : MonoBehaviour
 {
+    [Header("How much health the enemy has?")]
     [SerializeField] public int health;
+
+    [Header("How long the enemy is invinsible after hit?")]
     [SerializeField] private float iFramesDuration;
+
+    [Header("How many times the enemy flashes after hit")]
     [SerializeField] private int numberOfFlashes;
 
-    public int remainingHealth { get; private set; }
+    [Header("What other behaviors the enemy has?")]
+    [SerializeField] private Behaviour[] components;
+
+    public int remainingHealth { get; private set; } // How much health the enemy has now?
     private BoxCollider2D enemy_collider;
-    private Animator enemy_animator;
+    private Animator enemy_animator; 
     private SpriteRenderer enemy_sprite_rend;
 
     EnemyPatrol patrol;
-
-    [SerializeField] private Behaviour[] components;
 
     private bool isDead = false;
     public bool frames_activated = false;
@@ -30,38 +39,41 @@ public class EnemyLife : MonoBehaviour
         enemy_sprite_rend = GetComponent<SpriteRenderer>();
     }
 
+    // Event used after the enemy completes death animation
     private void DeleteEnemy()
     {
         gameObject.SetActive(false);
+        Debug.Log("Enemy de-activated!");
     }
 
     public void ReceiveDamage(int damage)
     {
-        health -= damage;
+        health -= damage; // usually damage = 1 from player's hit
         Debug.Log("Enemy took " + damage + " damage!");
-        Debug.Log("Enemy has " + health + " hp left!");
 
         remainingHealth = Mathf.Clamp(remainingHealth - damage, 0, health);
+        Debug.Log("Enemy has " + remainingHealth + " hp left!");
 
-        if (remainingHealth > 0)
+        if (remainingHealth > 0) // if the enemy still has hp
         {
             enemy_animator.SetTrigger("hurt");
             StartCoroutine(iFramesActivation());
         }
-        else if (remainingHealth == 0)
+        else if (remainingHealth == 0) // if it is time for the enemy to be eliminated
         {
             Debug.Log("Enemy defeated!");
             Dead();
         }
     }
 
+    // Method used to give to enemy their IFrames (Invisibility Frames)
     private IEnumerator iFramesActivation()
     {
         frames_activated = true;
         float default_speed = patrol.speed;
         patrol.speed += 2f;
 
-        Physics2D.IgnoreLayerCollision(7, 8, true);
+        Physics2D.IgnoreLayerCollision(7, 8, true); // ignore collision with "Player" or "Enemy"
         for (int i = 0; i < numberOfFlashes; i++)
         {
             enemy_sprite_rend.color = new Color(1, 0, 0, 0.5f);
@@ -83,7 +95,7 @@ public class EnemyLife : MonoBehaviour
 
             foreach (Behaviour component in components)
             {
-                component.enabled = false;
+                component.enabled = false; // when the enemy is eliminated all their components are gone
             }
             enemy_animator.SetTrigger("die");
         }

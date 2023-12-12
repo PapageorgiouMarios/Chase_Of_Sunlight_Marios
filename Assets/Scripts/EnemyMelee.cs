@@ -1,18 +1,32 @@
 using UnityEngine;
 
+/*
+ * EnemyMelee is used for the melee Serpent Warriors
+ * They use one of two attack animations based on a random number generator from 1 to 100
+ * The attack is performed with the help of one extra collider. When the player is inside this collider
+ * the enemy attacks. If the attack is successful, the player loses health
+ */
 public class EnemyMelee : MonoBehaviour
 {
+    [Header("How much is melee attack's range?")]
     [SerializeField] private float range;
+
+    [Header("How far is the attack collider from the enemy?")]
     [SerializeField] private float colliderDistance;
+
+    [Header("How long it takes for the enemy to attack again?")]
     [SerializeField] private float cooldown;
+
+    [Header("How much damage the attack does?")]
     [SerializeField] private int damage;
+
     [SerializeField] private BoxCollider2D boxCollider;
-    [SerializeField] private LayerMask player;
+    [SerializeField] private LayerMask player; // Use the "Player" Layer to handle attack to player
 
     private float cooldownTimer = Mathf.Infinity;
     private Animator serpent_warrior_anim;
 
-    private PlayerLife player_health;
+    private PlayerLife player_health; // Necessary to use TakeDamage(damage) to Player
 
     private EnemyPatrol enemyPatrol;
 
