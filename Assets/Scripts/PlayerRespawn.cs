@@ -45,7 +45,7 @@ public class PlayerRespawn : MonoBehaviour
         if (collision.transform.tag == "EndCP")
         {
             Debug.Log("End Game");
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(2);
         }
     }
 }
