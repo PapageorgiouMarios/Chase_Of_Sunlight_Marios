@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class EndScreenManager : MonoBehaviour
 {
     
-    [SerializeField] private float duration = 20f;
+    [SerializeField] private float duration = 5f;
     private float timer = 0f;
 
     private void Start()
