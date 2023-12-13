@@ -7,6 +7,7 @@ TagManager:
   - Coin
   - Trap
   - Checkpoint
+  - EndCP
   layers:
   - Default
   - TransparentFX
