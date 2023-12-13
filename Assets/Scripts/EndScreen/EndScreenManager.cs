@@ -18,6 +18,7 @@ public class EndScreenManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        Debug.Log("timer: " + timer);
         if (timer >= duration)
         {
             SceneManager.LoadScene(0);
