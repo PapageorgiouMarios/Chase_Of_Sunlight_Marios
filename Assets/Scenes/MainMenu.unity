@@ -395,6 +395,7 @@ GameObject:
   - component: {fileID: 338242016}
   - component: {fileID: 338242015}
   - component: {fileID: 338242014}
+  - component: {fileID: 338242017}
   m_Layer: 5
   m_Name: no_btn
   m_TagString: Untagged
@@ -465,7 +466,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 338242015}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 338242017}
+        m_TargetAssemblyTypeName: QuitConfirmation, Assembly-CSharp
+        m_MethodName: CancelExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &338242015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +517,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338242012}
   m_CullTransparentMesh: 1
+--- !u!114 &338242017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338242012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc2a68e9b2615b47bde0f3034421e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  confirmationPanel: {fileID: 1506851730}
 --- !u!1 &387874963
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,6 +617,7 @@ GameObject:
   - component: {fileID: 518331196}
   - component: {fileID: 518331195}
   - component: {fileID: 518331194}
+  - component: {fileID: 518331197}
   m_Layer: 5
   m_Name: yes_btn
   m_TagString: Untagged
@@ -661,7 +688,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 518331195}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 518331197}
+        m_TargetAssemblyTypeName: QuitConfirmation, Assembly-CSharp
+        m_MethodName: ConfirmExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &518331195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,6 +739,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518331192}
   m_CullTransparentMesh: 1
+--- !u!114 &518331197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518331192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc2a68e9b2615b47bde0f3034421e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  confirmationPanel: {fileID: 1506851730}
 --- !u!1 &540930103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1716,8 +1768,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1824864229}
-        m_TargetAssemblyTypeName: UISceneManager, Assembly-CSharp
-        m_MethodName: Quit
+        m_TargetAssemblyTypeName: QuitConfirmation, Assembly-CSharp
+        m_MethodName: ShowExitConfirmation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1736,9 +1788,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1824864222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03df99d1c44f3214e9a795d96190ae3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cc2a68e9b2615b47bde0f3034421e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  confirmationPanel: {fileID: 1506851730}
 --- !u!1 &1949388458
 GameObject:
   m_ObjectHideFlags: 0

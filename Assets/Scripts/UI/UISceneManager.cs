@@ -31,8 +31,10 @@ public class UISceneManager : MonoBehaviour
     
     public void Quit()
     {
+        /*
         Debug.Log("Scene: Quit");
         Application.Quit();
         UnityEditor.EditorApplication.isPlaying = false;
+        */
     }
 }
