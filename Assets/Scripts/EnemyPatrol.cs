@@ -8,10 +8,10 @@ using UnityEngine;
 public class EnemyPatrol : MonoBehaviour
 {
     [Header("Left edge")]
-    [SerializeField] private Transform leftEdge;
+    [SerializeField] public Transform leftEdge;
 
     [Header("Right edge")]
-    [SerializeField] private Transform rightEdge;
+    [SerializeField] public Transform rightEdge;
 
     [Header("Whose position it takes?")]
     [SerializeField] private Transform enemy;
