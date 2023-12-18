@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+
     public int starting_health = 3;
-    public int currentHealth { get; private set; }
+    public int currentHealth { get; set; }
     public int chances = 4;
 
     private Rigidbody2D player_body;
@@ -32,6 +33,9 @@ public class PlayerLife : MonoBehaviour
         player_collider = GetComponent<BoxCollider2D>();
         player_sprite_rend = GetComponent<SpriteRenderer>();
         extra_lives.text = "x" + (chances - 1);
+
+        GameManager.instance.SetHealth(currentHealth);
+        GameManager.instance.SetChances(chances);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -60,6 +64,8 @@ public class PlayerLife : MonoBehaviour
         hurt = true;
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, starting_health);
 
+        GameManager.instance.SetHealth(currentHealth);
+
         Debug.Log("Player health now: " + currentHealth);
 
         if (currentHealth > 0)
@@ -75,6 +81,7 @@ public class PlayerLife : MonoBehaviour
             if(chances != 0) 
             {
                 chances = chances - 1;
+                GameManager.instance.SetChances(chances);
             }
 
             if(chances - 1 == -1) 
@@ -111,6 +118,7 @@ public class PlayerLife : MonoBehaviour
     public void AddHealth(int hp) 
     {
         currentHealth = Mathf.Clamp(currentHealth + hp, 0, starting_health);
+        GameManager.instance.SetHealth(currentHealth);
     }
 
     public void Respawn() 

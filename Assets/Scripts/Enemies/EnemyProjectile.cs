@@ -21,7 +21,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > 2)
+        if (timer > 1.5)
         {
             Destroy(gameObject);
         }

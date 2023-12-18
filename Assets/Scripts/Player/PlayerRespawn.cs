@@ -13,7 +13,6 @@ public class PlayerRespawn : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
     }
 
-
     private void RespawnAgain() 
     {
         if(player_life.chances == 0) 

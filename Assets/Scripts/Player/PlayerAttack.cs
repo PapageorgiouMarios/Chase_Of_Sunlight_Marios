@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     public int damage;
 
     private float dirX;
+    public bool isAttacking;
 
     private void Awake()
     {
@@ -66,6 +67,7 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         player_attack_animator.SetTrigger("attack");
+        isAttacking = true;
         cooldownTimer = 0;
     }
 

@@ -41,6 +41,7 @@ public class EnterBossFight : MonoBehaviour
 
     private void BossRoom() 
     {
+        PlayerPrefs.Save();
         SceneManager.LoadScene(2);
     }
 }

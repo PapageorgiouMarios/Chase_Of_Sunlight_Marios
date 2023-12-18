@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /*
  * EnemyPatrol is used from Melee Enemies. There are two waypoints on opposite sides
@@ -28,6 +29,14 @@ public class EnemyPatrol : MonoBehaviour
     private bool left;
     private Animator enemy_animator;
 
+    [Header("What object the enemy follows?")]
+    [SerializeField] PlayerLife player;
+
+    [Header("What is the player's position")]
+    [SerializeField] Transform playerTransform;
+
+    private bool playerInBounds;
+
     private void Awake()
     {
         enemy_animator = GetComponent<Animator>();
@@ -41,26 +50,48 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Update()
     {
-        if(left) 
+        playerInBounds = (playerTransform.position.x >= leftEdge.position.x && 
+                          playerTransform.position.x <= rightEdge.position.x);
+
+        if (playerInBounds)
         {
-            if(enemy.position.x >= leftEdge.position.x) 
+            // Calculate movement towards the player without the speed factor
+            Vector3 targetEnemyPosition = new Vector3(playerTransform.position.x, enemy.position.y, enemy.position.z);
+            Vector3 directionToPlayer = (targetEnemyPosition - enemy.position).normalized;
+            enemy.position += directionToPlayer * speed * Time.deltaTime;
+
+            if (directionToPlayer.x > 0)
             {
-                MoveToDirection(-1);
+                enemy.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
             }
-            else 
+            else if (directionToPlayer.x < 0)
             {
-                ChangeDirection();
+                enemy.localScale = new Vector3(-Mathf.Abs(scale.x), scale.y, scale.z);
             }
         }
         else 
         {
-            if (enemy.position.x <= rightEdge.position.x)
+            if (left)
             {
-                MoveToDirection(1);
+                if (enemy.position.x >= leftEdge.position.x)
+                {
+                    MoveToDirection(-1);
+                }
+                else
+                {
+                    ChangeDirection();
+                }
             }
             else
             {
-                ChangeDirection();
+                if (enemy.position.x <= rightEdge.position.x)
+                {
+                    MoveToDirection(1);
+                }
+                else
+                {
+                    ChangeDirection();
+                }
             }
         }
     }

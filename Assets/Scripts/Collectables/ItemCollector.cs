@@ -20,8 +20,8 @@ public class ItemCollector : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin")) // When the player finds a coin
         {
-            //Destroy(collision.gameObject); // we remove the object from the game
-            coins++; // add the coin to the collection 
+            coins++; // add the coin to the collection
+            GameManager.instance.SetCoins(coins);
             HowManyCoins.text = "Coins: " + coins; // update the text showing all coins
         }
     }

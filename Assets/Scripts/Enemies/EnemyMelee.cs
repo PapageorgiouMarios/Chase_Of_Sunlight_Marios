@@ -39,36 +39,15 @@ public class EnemyMelee : MonoBehaviour
 
     private void Update()
     {
-        int randomAttack = Random.Range(0, 100);
-
-        cooldownTimer += Time.deltaTime;
-
-        if (Player_Spotted())
-        {
-            Debug.Log("Serpent Warrior detected Player");
-            if (cooldownTimer >= cooldown) 
-            {
-                Debug.Log("Serpent Warrior attacks");
-                cooldownTimer = 0;
-
-                if(randomAttack < 70) 
-                {
-                    serpent_warrior_anim.SetTrigger("attack_2");
-                }
-                else 
-                {
-                    serpent_warrior_anim.SetTrigger("attack_1");
-                }
-            }
-        }
+        AttackPlayer();
 
         if (enemyPatrol != null) 
         {
-            enemyPatrol.enabled = !Player_Spotted();
+            enemyPatrol.enabled = !HitboxActivated();
         }
     }
 
-    private bool Player_Spotted() 
+    private bool HitboxActivated() 
     {
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
                                              new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z), 0,
@@ -90,11 +69,37 @@ public class EnemyMelee : MonoBehaviour
 
     private void DamagePlayer() 
     {
-        if (Player_Spotted()) 
+        if (HitboxActivated()) 
         {
             if (!player_health.frames_activated) 
             {
                 player_health.TakeDamage(damage);
+            }
+        }
+    }
+
+    private void AttackPlayer() 
+    {
+        int randomAttack = Random.Range(0, 100);
+
+        cooldownTimer += Time.deltaTime;
+
+        if (HitboxActivated())
+        {
+            Debug.Log("Serpent Warrior detected Player");
+            if (cooldownTimer >= cooldown)
+            {
+                Debug.Log("Serpent Warrior attacks");
+                cooldownTimer = 0;
+
+                if (randomAttack < 70)
+                {
+                    serpent_warrior_anim.SetTrigger("attack_2");
+                }
+                else
+                {
+                    serpent_warrior_anim.SetTrigger("attack_1");
+                }
             }
         }
     }

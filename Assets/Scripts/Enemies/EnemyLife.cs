@@ -32,7 +32,6 @@ public class EnemyLife : MonoBehaviour
     private void Awake()
     {
         remainingHealth = health;
-        Debug.Log("Enemy is alive!");
         patrol = GetComponentInParent<EnemyPatrol>();
         enemy_animator = GetComponent<Animator>();
         enemy_collider = GetComponent<BoxCollider2D>();
@@ -43,16 +42,13 @@ public class EnemyLife : MonoBehaviour
     private void DeleteEnemy()
     {
         gameObject.SetActive(false);
-        Debug.Log("Enemy de-activated!");
+        GameManager.instance.AddDefeatedEnemies();
     }
 
     public void ReceiveDamage(int damage)
     {
         health -= damage; // usually damage = 1 from player's hit
-        Debug.Log("Enemy took " + damage + " damage!");
-
         remainingHealth = Mathf.Clamp(remainingHealth - damage, 0, health);
-        Debug.Log("Enemy has " + remainingHealth + " hp left!");
 
         if (remainingHealth > 0) // if the enemy still has hp
         {
