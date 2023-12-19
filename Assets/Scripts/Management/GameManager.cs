@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * GameManager is responsible to keep track of data which are needed in all scenes.
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f; // Variable to track elapsed time in seconds
 
     private string formattedTime = "0:00";
+
+    [SerializeField] public Text howManyCoinsText;
+    [SerializeField] public Text howManyExtraLives;
 
     private void Awake()
     {

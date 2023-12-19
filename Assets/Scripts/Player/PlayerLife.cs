@@ -5,19 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLife : MonoBehaviour
 {
+    public static PlayerLife instance { get; private set; }
 
     public int starting_health = 3;
     public int currentHealth { get; set; }
-    public int chances = 4;
+    public int chances { get; set; }
 
     private Rigidbody2D player_body;
-    private Animator death_animator;
+    private Animator death_animator { get; set; }
     private BoxCollider2D player_collider;
     private SpriteRenderer player_sprite_rend;
 
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
-    [SerializeField] private Text extra_lives;
+    //[SerializeField] private Text extra_lives;
 
     [SerializeField] private AudioClip hurtSound;
     [SerializeField] private AudioClip deathSound;
@@ -27,13 +28,24 @@ public class PlayerLife : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         currentHealth = starting_health;
+        chances = 4;
         player_body = GetComponent<Rigidbody2D>();
         death_animator = GetComponent<Animator>();
         player_collider = GetComponent<BoxCollider2D>();
         player_sprite_rend = GetComponent<SpriteRenderer>();
-        extra_lives.text = "x" + (chances - 1);
 
+        GameManager.instance.howManyExtraLives.text = "x" + (chances - 1);
         GameManager.instance.SetHealth(currentHealth);
         GameManager.instance.SetChances(chances);
     }
@@ -84,13 +96,15 @@ public class PlayerLife : MonoBehaviour
                 GameManager.instance.SetChances(chances);
             }
 
-            if(chances - 1 == -1) 
+            if(chances == 1) 
             {
-                extra_lives.text = "x0";
+                GameManager.instance.howManyExtraLives.text = "x0";
+                //extra_lives.text = "x0";
             }
-            else 
+            else
             {
-                extra_lives.text = "x" + (chances - 1);
+                GameManager.instance.howManyExtraLives.text = "x" + (chances - 1);
+                //extra_lives.text = "x" + (chances - 1);
             }
         }
 

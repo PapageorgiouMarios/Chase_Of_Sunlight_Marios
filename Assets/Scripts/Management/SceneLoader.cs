@@ -9,9 +9,9 @@ public class SceneLoader : MonoBehaviour
     string enemiesKey = "enemiesDefeated"; // Enemies Defeated Key
     string durationKey = "timePlayed"; // Duration Key
 
-    [SerializeField] PlayerLife player;
     [SerializeField] Text coinText;
     [SerializeField] Text livesLeft;
+    [SerializeField] Transform whereToStart;
 
     private void Awake()
     {
@@ -31,8 +31,10 @@ public class SceneLoader : MonoBehaviour
         Debug.Log("Time so far:  " + duration);
         Debug.Log("-------------------------------------");
 
-        player.chances = chances;
-        player.currentHealth = health;
+        PlayerLife.instance.chances = chances;
+        PlayerLife.instance.currentHealth = health;
+        PlayerLife.instance.transform.position = whereToStart.position;
+
         coinText.text = "Coins: " + coins;
 
         if (chances - 1 == -1)
@@ -41,7 +43,7 @@ public class SceneLoader : MonoBehaviour
         }
         else
         {
-            livesLeft.text = "x" + (chances - 1);
+            livesLeft.text = "x" + (PlayerLife.instance.chances - 1);
         }
     }
 }

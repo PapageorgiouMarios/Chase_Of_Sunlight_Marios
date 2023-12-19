@@ -14,7 +14,7 @@ using UnityEngine.UI;
 public class ItemCollector : MonoBehaviour
 {
     private int coins = 0; // Number of coins collected
-    [SerializeField] private Text HowManyCoins; // Text shown upper left 
+    //[SerializeField] private Text HowManyCoins; // Text shown upper left 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,7 +22,8 @@ public class ItemCollector : MonoBehaviour
         {
             coins++; // add the coin to the collection
             GameManager.instance.SetCoins(coins);
-            HowManyCoins.text = "Coins: " + coins; // update the text showing all coins
+            GameManager.instance.howManyCoinsText.text = "Coins: " + coins;
+            //HowManyCoins.text = "Coins: " + coins; // update the text showing all coins
         }
     }
 }

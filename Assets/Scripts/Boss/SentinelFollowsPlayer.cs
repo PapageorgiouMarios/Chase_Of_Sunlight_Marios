@@ -15,25 +15,13 @@ public class SentinelFollowsPlayer : MonoBehaviour
     [Header("Right Edge")]
     [SerializeField] Transform rightEdge;
 
-    [Header("What object the Sentinel follows?")]
-    [SerializeField] PlayerLife player;
-
-    [Header("What is the player's position")]
-    [SerializeField] Transform playerTransform;
-
-    private void Awake()
-    {
-        player = GetComponent<PlayerLife>(); // Get the player
-    }
-
-
     private void Update()
     {
         if (gameObject != null) // If the Sentinel object exists
         {
             float distanceFromPlayer;
 
-            Vector2 playerPosition = playerTransform.position; // Get the player's position
+            Vector2 playerPosition = PlayerLife.instance.transform.position; // Get the player's position
             distanceFromPlayer = Vector2.Distance(gameObject.transform.position, playerPosition);
 
             // Keep track if the player is in bounds

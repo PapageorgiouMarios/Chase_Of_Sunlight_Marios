@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerHealthBar : MonoBehaviour
 {
-    [SerializeField] private PlayerLife player_health;
-
     public Image[] heart_images = new Image[3];
 
     private int how_many_hearts;
+
 
     private void Start()
     {
@@ -17,16 +16,16 @@ public class PlayerHealthBar : MonoBehaviour
         {
             heart_images[i] = transform.GetChild(i).GetComponent<Image>();
         }
-
-        Debug.Log("How many hearts are shown: " + player_health.currentHealth);
-        how_many_hearts = player_health.currentHealth;
+     
+        Debug.Log("How many hearts are shown: " + PlayerLife.instance.currentHealth);
+        how_many_hearts = PlayerLife.instance.currentHealth;
 
         HideAllImages();
     }
 
     private void Update()
     {
-        how_many_hearts = player_health.currentHealth;
+        how_many_hearts = PlayerLife.instance.currentHealth;
         UpdateHearts();
     }
 

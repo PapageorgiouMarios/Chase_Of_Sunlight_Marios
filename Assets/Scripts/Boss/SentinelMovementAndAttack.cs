@@ -64,6 +64,7 @@ public class SentinelMovementAndAttack : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Player got hit!!!!");
+        PlayerLife.instance.TakeDamage(1);
     }
 
     // Event used in attack animation
