@@ -21,6 +21,33 @@ public class SceneLoader : MonoBehaviour
         int enemies = PlayerPrefs.GetInt(enemiesKey);
         int duration = PlayerPrefs.GetInt(durationKey);
 
+        PlayerLife.instance.chances = chances;
+        PlayerLife.instance.currentHealth = health;
+        PlayerLife.instance.transform.position = whereToStart.position;
+
+        GameObject coinObject = GameObject.Find("How Many Coins");
+        GameObject livesObject = GameObject.Find("How Many Extra Lives");
+
+        coinText = coinObject.GetComponent<Text>();
+        livesLeft = livesObject.GetComponent<Text>();
+
+        GameManager.instance.howManyCoinsText = coinText;
+        GameManager.instance.howManyExtraLives = livesLeft;
+
+        GameManager.instance.howManyCoinsText.text = "Coins: " + coins;
+
+        if (chances == -1 || chances == 0 || chances == 1) 
+        {
+            GameManager.instance.howManyExtraLives.text = "x0";
+            //extra_lives.text = "x0";
+        }
+        else if (chances > 1 && chances < 4)
+        {
+            GameManager.instance.howManyExtraLives.text = "x" + (chances - 1);
+            //extra_lives.text = "x" + (chances - 1);
+        }
+
+
         // Print all PlayerPrefs data for debugging purposes
         Debug.Log("-------------------------------------");
         Debug.Log("------Printing PlayerPrefs data------");
@@ -29,21 +56,8 @@ public class SceneLoader : MonoBehaviour
         Debug.Log("Total coins:  " + coins);
         Debug.Log("Enemies defeated:  " + enemies);
         Debug.Log("Time so far:  " + duration);
+        Debug.Log("Text for lives:  " + livesLeft.text + coinText);
+        Debug.Log("Text for coins:  " + coinText.text + livesLeft);
         Debug.Log("-------------------------------------");
-
-        PlayerLife.instance.chances = chances;
-        PlayerLife.instance.currentHealth = health;
-        PlayerLife.instance.transform.position = whereToStart.position;
-
-        coinText.text = "Coins: " + coins;
-
-        if (chances - 1 == -1)
-        {
-            livesLeft.text = "x0";
-        }
-        else
-        {
-            livesLeft.text = "x" + (PlayerLife.instance.chances - 1);
-        }
     }
 }

@@ -35,9 +35,8 @@ public class GameManager : MonoBehaviour
     private float elapsedTime = 0f; // Variable to track elapsed time in seconds
 
     private string formattedTime = "0:00";
-
-    [SerializeField] public Text howManyCoinsText;
-    [SerializeField] public Text howManyExtraLives;
+    public Text howManyCoinsText { get; set; }
+    public Text howManyExtraLives { get; set; }
 
     private void Awake()
     {
@@ -60,6 +59,15 @@ public class GameManager : MonoBehaviour
         enemies = PlayerPrefs.GetInt(enemiesKey);
         Debug.Log("Awake Game Manager: Enemies defeated = " + enemies);
         duration = PlayerPrefs.GetInt(durationKey);
+
+        GameObject coinObject = GameObject.Find("How Many Coins");
+        GameObject livesObject = GameObject.Find("How Many Extra Lives");
+
+        if(coinObject != null && livesObject != null) 
+        {
+            howManyCoinsText = coinObject.GetComponent<Text>();
+            howManyExtraLives = livesObject.GetComponent<Text>();
+        }
     }
 
     private void Start()

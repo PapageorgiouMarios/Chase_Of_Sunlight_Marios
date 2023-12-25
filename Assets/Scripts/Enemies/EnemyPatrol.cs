@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 /*
  * EnemyPatrol is used from Melee Enemies. There are two waypoints on opposite sides
- * the enemy walks between these two waypoints
+ * the boss walks between these two waypoints
  */
 
 public class EnemyPatrol : MonoBehaviour
@@ -17,10 +17,10 @@ public class EnemyPatrol : MonoBehaviour
     [Header("Whose position it takes?")]
     [SerializeField] private Transform enemy;
 
-    [Header("How much fast the enemy patrols?")]
+    [Header("How much fast the boss patrols?")]
     [SerializeField] public float speed;
 
-    [Header("How long the enemy stays put when they reach waypoint?")]
+    [Header("How long the boss stays put when they reach waypoint?")]
     [SerializeField] private float standing_duration;
 
     private float standing_timer; // time counter 
@@ -29,7 +29,7 @@ public class EnemyPatrol : MonoBehaviour
     private bool left;
     private Animator enemy_animator;
 
-    [Header("What object the enemy follows?")]
+    [Header("What object the boss follows?")]
     [SerializeField] PlayerLife player;
 
     [Header("What is the player's position")]

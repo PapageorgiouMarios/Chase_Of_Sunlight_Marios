@@ -2,24 +2,24 @@ using System.Collections;
 using UnityEngine;
 
 /*
- *  EnemyLife is responsible for every enemy's health.
- *  Each enemy is given health points (hp). When they reach 0, they are eliminated
+ *  EnemyLife is responsible for every boss's health.
+ *  Each boss is given health points (hp). When they reach 0, they are eliminated
  */
 public class EnemyLife : MonoBehaviour
 {
-    [Header("How much health the enemy has?")]
+    [Header("How much health the boss has?")]
     [SerializeField] public int health;
 
-    [Header("How long the enemy is invinsible after hit?")]
+    [Header("How long the boss is invinsible after hit?")]
     [SerializeField] private float iFramesDuration;
 
-    [Header("How many times the enemy flashes after hit")]
+    [Header("How many times the boss flashes after hit")]
     [SerializeField] private int numberOfFlashes;
 
-    [Header("What other behaviors the enemy has?")]
+    [Header("What other behaviors the boss has?")]
     [SerializeField] private Behaviour[] components;
 
-    public int remainingHealth { get; private set; } // How much health the enemy has now?
+    public int remainingHealth { get; private set; } // How much health the boss has now?
     private BoxCollider2D enemy_collider;
     private Animator enemy_animator; 
     private SpriteRenderer enemy_sprite_rend;
@@ -38,7 +38,7 @@ public class EnemyLife : MonoBehaviour
         enemy_sprite_rend = GetComponent<SpriteRenderer>();
     }
 
-    // Event used after the enemy completes death animation
+    // Event used after the boss completes death animation
     private void DeleteEnemy()
     {
         gameObject.SetActive(false);
@@ -50,19 +50,19 @@ public class EnemyLife : MonoBehaviour
         health -= damage; // usually damage = 1 from player's hit
         remainingHealth = Mathf.Clamp(remainingHealth - damage, 0, health);
 
-        if (remainingHealth > 0) // if the enemy still has hp
+        if (remainingHealth > 0) // if the boss still has hp
         {
             enemy_animator.SetTrigger("hurt");
             StartCoroutine(iFramesActivation());
         }
-        else if (remainingHealth == 0) // if it is time for the enemy to be eliminated
+        else if (remainingHealth == 0) // if it is time for the boss to be eliminated
         {
             Debug.Log("Enemy defeated!");
             Dead();
         }
     }
 
-    // Method used to give to enemy their IFrames (Invisibility Frames)
+    // Method used to give to boss their IFrames (Invisibility Frames)
     private IEnumerator iFramesActivation()
     {
         frames_activated = true;
@@ -91,7 +91,7 @@ public class EnemyLife : MonoBehaviour
 
             foreach (Behaviour component in components)
             {
-                component.enabled = false; // when the enemy is eliminated all their components are gone
+                component.enabled = false; // when the boss is eliminated all their components are gone
             }
             enemy_animator.SetTrigger("die");
         }

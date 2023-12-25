@@ -16,8 +16,7 @@ public class PlayerHealthBar : MonoBehaviour
         {
             heart_images[i] = transform.GetChild(i).GetComponent<Image>();
         }
-     
-        Debug.Log("How many hearts are shown: " + PlayerLife.instance.currentHealth);
+  
         how_many_hearts = PlayerLife.instance.currentHealth;
 
         HideAllImages();

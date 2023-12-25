@@ -96,12 +96,12 @@ public class PlayerLife : MonoBehaviour
                 GameManager.instance.SetChances(chances);
             }
 
-            if(chances == 1) 
+            if (chances == -1 || chances == 0 || chances == 1)
             {
                 GameManager.instance.howManyExtraLives.text = "x0";
                 //extra_lives.text = "x0";
             }
-            else
+            else if (chances > 1 && chances < 4)
             {
                 GameManager.instance.howManyExtraLives.text = "x" + (chances - 1);
                 //extra_lives.text = "x" + (chances - 1);

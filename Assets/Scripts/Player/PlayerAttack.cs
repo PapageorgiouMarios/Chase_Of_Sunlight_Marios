@@ -53,6 +53,17 @@ public class PlayerAttack : MonoBehaviour
                     {
                         Debug.Log("Enemy's IFrames activated!!!!!");
                     }
+
+                    SentinelLife bossLife = enemiesToDamage[i].GetComponent<SentinelLife>();
+
+                    if(bossLife != null && bossLife.frames_activated == false)
+                    {
+                        bossLife.ReceiveDamage(damage);
+                    }
+                    else
+                    {
+                        Debug.Log("Boss' IFrames activated!!!!!");
+                    }
                 }
                 else
                 {

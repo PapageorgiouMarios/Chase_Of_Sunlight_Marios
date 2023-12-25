@@ -52,9 +52,26 @@ public class EnterBossFight : MonoBehaviour
         BossRoom();
     }
 
+    IEnumerator LightScreen()
+    {
+        Color newcolor = darken_screen.color;
+        newcolor.a = 0;
+        darken_screen.color = newcolor;
+        yield return null;
+
+        player_body.constraints = RigidbodyConstraints2D.None;
+        Vector3 newPos = player_body.position;
+        newPos.z = 0f;
+        player_body.position = newPos;
+        player_movement.enabled = true;
+
+        BossRoom();
+    }
+
     private void BossRoom() 
     {
         PlayerPrefs.Save();
         SceneManager.LoadScene(2);
+        StartCoroutine(LightScreen());
     }
 }

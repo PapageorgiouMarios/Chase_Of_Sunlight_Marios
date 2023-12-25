@@ -5,11 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance { get; private set; } // This instance will be used in all scenes
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseScreen;
 
     private void Awake()
     {
+        instance = this;
+
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
     }
