@@ -6,6 +6,8 @@ public class SelectionArrow : MonoBehaviour
     [SerializeField] private RectTransform[] options;
     private RectTransform rect;
     private int current_position;
+    [SerializeField] private AudioClip moveSound;
+    [SerializeField] private AudioClip clickSound;
 
     private void Awake()
     {
@@ -16,12 +18,14 @@ public class SelectionArrow : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) 
         {
+            SoundManager.instance.PlaySound(moveSound);
             ChangePosition(-1);
             Debug.Log("Current choice: " + options[current_position]);
         }
         
         if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) 
         {
+            SoundManager.instance.PlaySound(moveSound);
             ChangePosition(1);
             Debug.Log("Current choice: " + options[current_position]);
         }
@@ -51,6 +55,7 @@ public class SelectionArrow : MonoBehaviour
 
     private void Interact() 
     {
+        SoundManager.instance.PlaySound(clickSound);
         options[current_position].GetComponent<Button>().onClick.Invoke();
     }
 }

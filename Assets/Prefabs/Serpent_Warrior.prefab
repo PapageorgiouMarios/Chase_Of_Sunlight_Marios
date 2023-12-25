@@ -173,6 +173,7 @@ MonoBehaviour:
   components:
   - {fileID: 7297599843601794412}
   - {fileID: 4495884833210291429}
+  hurtSound: {fileID: 8300000, guid: 25f7ec032892ee140b2de4da09708e0e, type: 3}
   frames_activated: 0
 --- !u!114 &7297599843601794412
 MonoBehaviour:

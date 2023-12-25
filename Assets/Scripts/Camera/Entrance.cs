@@ -24,9 +24,11 @@ public class Entrance : MonoBehaviour
     {
         if(collision.tag == "Player") 
         {
-            if(collision.transform.position.x < transform.position.x) 
+
+            if (collision.transform.position.x < transform.position.x) 
             {
                 Debug.Log("Player entered boss fight");
+                SoundManager.instance.PlayBossMusic();
                 cam.MoveCamera(next);
                 showAssets = true;
             }

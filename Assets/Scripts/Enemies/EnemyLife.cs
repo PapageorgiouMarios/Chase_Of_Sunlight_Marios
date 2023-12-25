@@ -19,6 +19,9 @@ public class EnemyLife : MonoBehaviour
     [Header("What other behaviors the boss has?")]
     [SerializeField] private Behaviour[] components;
 
+    [Header("What sound is made when enemy is hit?")]
+    [SerializeField] private AudioClip hurtSound;
+
     public int remainingHealth { get; private set; } // How much health the boss has now?
     private BoxCollider2D enemy_collider;
     private Animator enemy_animator; 
@@ -49,6 +52,7 @@ public class EnemyLife : MonoBehaviour
     {
         health -= damage; // usually damage = 1 from player's hit
         remainingHealth = Mathf.Clamp(remainingHealth - damage, 0, health);
+        SoundManager.instance.PlaySound(hurtSound);
 
         if (remainingHealth > 0) // if the boss still has hp
         {

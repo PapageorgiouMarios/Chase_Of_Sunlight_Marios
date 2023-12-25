@@ -22,6 +22,8 @@ public class SentinelAttack : MonoBehaviour
     private PlayerLife player_health; // Necessary to use TakeDamage(damage) to Player
     private SentinelFollowing bossPatrol;
 
+    [SerializeField] private AudioClip attackSound;
+
     private void Awake()
     {
         boss_anim = GetComponent<Animator>();
@@ -69,6 +71,11 @@ public class SentinelAttack : MonoBehaviour
                 player_health.TakeDamage(damage);
             }
         }
+    }
+
+    public void PlayAttackSound()
+    {
+        SoundManager.instance.PlaySound(attackSound);
     }
 
     private void AttackPlayer()

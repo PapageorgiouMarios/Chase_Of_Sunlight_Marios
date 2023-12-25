@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance { get; private set; }
     private AudioSource soundSource;
     private AudioSource musicSource;
+    private AudioSource bossIntro;
+    private AudioSource bossMusic;
 
     private void Awake()
     {
@@ -14,7 +16,7 @@ public class SoundManager : MonoBehaviour
         soundSource = GetComponent<AudioSource>();
         musicSource = transform.GetChild(0).GetComponent<AudioSource>();
 
-        if(instance == null) 
+        if (instance == null) 
         {
             instance = this;
             DontDestroyOnLoad(this);
@@ -61,5 +63,25 @@ public class SoundManager : MonoBehaviour
     public void ChangeMusicVolume(float change)
     {
         ChangeSourceVolume(0.3f, "musicVolume", change, musicSource);
+    }
+
+    public void PlayBossMusic()
+    {
+        musicSource.Stop(); // Stop any non-boss music playing
+
+        bossIntro = transform.GetChild(1).GetComponent<AudioSource>();
+        bossMusic = transform.GetChild(2).GetComponent<AudioSource>();
+
+        if (bossIntro != null && bossMusic != null)
+        {
+            bossIntro.Play();
+            Invoke("PlayBossLoop", bossIntro.clip.length - 0.5f); // Start loop after intro finishes
+        }
+    }
+
+    private void PlayBossLoop()
+    {
+        bossMusic.loop = true;
+        bossMusic.Play();
     }
 }
