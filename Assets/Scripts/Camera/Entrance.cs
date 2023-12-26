@@ -18,6 +18,11 @@ public class Entrance : MonoBehaviour
             bossName.SetActive(true);
             bossHealth.SetActive(true);
         }
+
+        if(PlayerLife.instance != null && (PlayerLife.instance.transform.position.x > transform.position.x)) 
+        {
+            block.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,11 +36,6 @@ public class Entrance : MonoBehaviour
                 SoundManager.instance.PlayBossMusic();
                 cam.MoveCamera(next);
                 showAssets = true;
-            }
-            
-            else if(collision.transform.position.x > block.transform.position.x) 
-            {
-                block.SetActive(true);
             }
         }
     }

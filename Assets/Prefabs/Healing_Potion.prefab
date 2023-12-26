@@ -166,3 +166,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_value: 1
+  healSound: {fileID: 8300000, guid: cd12830a914ff4c46b7e415c2064111b, type: 3}

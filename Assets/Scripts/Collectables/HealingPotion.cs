@@ -13,6 +13,7 @@ using UnityEngine;
 public class HealingPotion : MonoBehaviour
 {
     [SerializeField] private int health_value; // How much health the potion gives
+    [SerializeField] AudioClip healSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +21,7 @@ public class HealingPotion : MonoBehaviour
         if (collision.tag == "Player" && collision.GetComponent<PlayerLife>().currentHealth < 3)
         {
             collision.GetComponent<PlayerLife>().AddHealth(health_value); // Add +1 Health point
+            SoundManager.instance.PlaySound(healSound);
             gameObject.SetActive(false); // De-activate the healing potion object
         }
         // In case another object collides with the "Healing_Potion" collider

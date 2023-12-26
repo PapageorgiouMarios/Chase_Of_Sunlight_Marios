@@ -5,6 +5,8 @@ public class SentinelHealthBar : MonoBehaviour
 {
     public Image[] heart_images = new Image[5];
 
+    [SerializeField] Image healthbarRectangle;
+
     private int how_many_hearts;
 
     [SerializeField] SentinelLife boss;
@@ -33,6 +35,8 @@ public class SentinelHealthBar : MonoBehaviour
         {
             img.enabled = false;
         }
+
+        healthbarRectangle.enabled = false;
     }
 
     private void ShowImage(int imageToShow)

@@ -23,6 +23,9 @@ public class EnemyMelee : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask player; // Use the "Player" Layer to handle attack to player
 
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip attackSound2;
+
     private float cooldownTimer = Mathf.Infinity;
     private Animator serpent_warrior_anim;
 
@@ -78,9 +81,19 @@ public class EnemyMelee : MonoBehaviour
         }
     }
 
+    public void PlayAttackSound()
+    {
+        SoundManager.instance.PlaySound(attackSound);
+    }
+
+    public void PlayAttackSound2()
+    {
+        SoundManager.instance.PlaySound(attackSound2);
+    }
+
     private void AttackPlayer() 
     {
-        int randomAttack = Random.Range(0, 100);
+        int randomAttack = Random.Range(0, 10);
 
         cooldownTimer += Time.deltaTime;
 
@@ -92,7 +105,7 @@ public class EnemyMelee : MonoBehaviour
                 Debug.Log("Serpent Warrior attacks");
                 cooldownTimer = 0;
 
-                if (randomAttack < 70)
+                if (randomAttack < 7)
                 {
                     serpent_warrior_anim.SetTrigger("attack_2");
                 }

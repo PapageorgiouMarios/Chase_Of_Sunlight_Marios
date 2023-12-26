@@ -174,4 +174,10 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll(); // Delete all PlayerPrefs data
     }
+
+    public void DestroyAfterRestart() 
+    {
+        instance = null;
+        Destroy(gameObject);
+    }
 }

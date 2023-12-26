@@ -30,6 +30,15 @@ public class SoundManager : MonoBehaviour
         ChangeSoundVolume(0);
     }
 
+    private void Update()
+    {
+        if(bossIntro != null && bossMusic != null) 
+        {
+            bossIntro.volume = musicSource.volume;
+            bossMusic.volume = musicSource.volume;
+        }
+    }
+
     public void PlaySound(AudioClip sound) 
     {
         soundSource.PlayOneShot(sound);
@@ -75,7 +84,7 @@ public class SoundManager : MonoBehaviour
         if (bossIntro != null && bossMusic != null)
         {
             bossIntro.Play();
-            Invoke("PlayBossLoop", bossIntro.clip.length - 0.5f); // Start loop after intro finishes
+            Invoke("PlayBossLoop", bossIntro.clip.length - 2); // Start loop after intro finishes
         }
     }
 
@@ -83,5 +92,33 @@ public class SoundManager : MonoBehaviour
     {
         bossMusic.loop = true;
         bossMusic.Play();
+    }
+
+    public void ChangeMusicClip(AudioClip newClip)
+    {
+        if (musicSource != null && newClip != null && newClip != musicSource)
+        {
+            musicSource.Stop();
+            musicSource.clip = newClip;
+            musicSource.Play();
+        }
+    }
+
+    public void StopMusic() 
+    {
+        if(musicSource != null) 
+        {
+            musicSource.Stop();
+        }
+
+        if(bossIntro != null) 
+        {
+            bossIntro.Stop();
+        }
+
+        if (bossMusic != null) 
+        {
+            bossMusic.Stop();
+        }
     }
 }

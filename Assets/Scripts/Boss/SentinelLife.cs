@@ -16,6 +16,8 @@ public class SentinelLife : MonoBehaviour
     [Header("What other behaviors the boss has?")]
     [SerializeField] private Behaviour[] components;
 
+    [SerializeField] private AudioClip deathSound;
+
     public int remainingHealth { get; private set; }
     private BoxCollider2D boss_collider;
     private Animator boss_animator;
@@ -84,5 +86,11 @@ public class SentinelLife : MonoBehaviour
             }
             boss_animator.SetTrigger("die");
         }
+    }
+
+    private void PlayDeathSound() 
+    {
+        SoundManager.instance.StopMusic();
+        SoundManager.instance.PlaySound(deathSound);
     }
 }

@@ -6,6 +6,7 @@ public class PlayerRespawn : MonoBehaviour
     private Transform current_checkpoint;
     private PlayerLife player_life;
     private UIManager uiManager;
+    [SerializeField] AudioClip fireLit;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class PlayerRespawn : MonoBehaviour
             current_checkpoint = collision.transform;
             collision.GetComponent<Collider2D>().enabled = false;
             collision.GetComponent<Animator>().SetTrigger("reached");
+            SoundManager.instance.PlaySound(fireLit);
         }
     }
 }

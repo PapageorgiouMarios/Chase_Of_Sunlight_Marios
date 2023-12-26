@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject pauseScreen;
 
+    [SerializeField] private AudioClip gameOverSound;
+
     private void Awake()
     {
         instance = this;
@@ -43,12 +45,20 @@ public class UIManager : MonoBehaviour
     #region Game Over Screen
     public void GameOver() 
     {
+        SoundManager.instance.StopMusic();
+        SoundManager.instance.PlaySound(gameOverSound);
         gameOverScreen.SetActive(true);
     }
 
     public void Restart() 
     {
-        SceneManager.LoadScene(1);
+        instance = null;
+        Destroy(gameObject);
+
+        GameManager.instance.DestroyAfterRestart();
+        PlayerLife.instance.DestroyAfterRestart();
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
@@ -81,8 +91,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
-
     public void SoundVolume() 
     {
         SoundManager.instance.ChangeSoundVolume(0.2f);
@@ -91,6 +99,12 @@ public class UIManager : MonoBehaviour
     public void MusicVolume()
     {
         SoundManager.instance.ChangeMusicVolume(0.2f);
+    }
+
+    public void DestroyInComplete() 
+    {
+        instance = null;
+        Destroy(gameObject);
     }
 
     #endregion

@@ -10,6 +10,7 @@ public class EnemyRanged : MonoBehaviour
 
     [SerializeField] private Transform leftEdge;
     [SerializeField] private Transform rightEdge;
+    [SerializeField] private AudioClip lightningSound;
 
     private Animator serpent_sage_anim;
 
@@ -46,5 +47,6 @@ public class EnemyRanged : MonoBehaviour
     private void Shoot() 
     {
         Instantiate(projectile, projectile_position.position, Quaternion.identity);
+        SoundManager.instance.PlaySound(lightningSound);
     }
 }
