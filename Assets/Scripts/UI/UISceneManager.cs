@@ -22,12 +22,6 @@ public class UISceneManager : MonoBehaviour
         Debug.Log("Scene: EndScene");
         SceneManager.LoadScene(2);
     }
-
-    public void Settings()
-    {
-        Debug.Log("Scene: Settings -- need to setup Settings scene");
-        // SceneManager.LoadScene(1); // TODO: settings scene
-    }
     
     public void Quit()
     {
