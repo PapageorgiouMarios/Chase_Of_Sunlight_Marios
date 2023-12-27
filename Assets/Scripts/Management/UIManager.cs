@@ -63,11 +63,23 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
+        instance = null;
+        Destroy(gameObject);
+
+        GameManager.instance.DestroyAfterRestart();
+        PlayerLife.instance.DestroyAfterRestart();
+
         SceneManager.LoadScene(0);
     }
 
     public void Quit()
     {
+        instance = null;
+        Destroy(gameObject);
+
+        GameManager.instance.DestroyAfterRestart();
+        PlayerLife.instance.DestroyAfterRestart();
+
         Application.Quit();
 
     #if UNITY_EDITOR
