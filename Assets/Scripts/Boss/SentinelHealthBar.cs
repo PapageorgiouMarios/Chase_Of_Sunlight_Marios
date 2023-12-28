@@ -5,7 +5,7 @@ public class SentinelHealthBar : MonoBehaviour
 {
     public Image[] heart_images = new Image[5];
 
-    [SerializeField] Image healthbarRectangle;
+    Image healthbarRectangle;
 
     private int how_many_hearts;
 
@@ -19,6 +19,8 @@ public class SentinelHealthBar : MonoBehaviour
         }
 
         how_many_hearts = boss.health;
+
+        healthbarRectangle = transform.parent.GetChild(0).GetComponent<Image>();
 
         HideAllImages();
     }
@@ -36,7 +38,10 @@ public class SentinelHealthBar : MonoBehaviour
             img.enabled = false;
         }
 
-        healthbarRectangle.enabled = false;
+        if (healthbarRectangle.enabled) 
+        {
+            healthbarRectangle.enabled = false;
+        }  
     }
 
     private void ShowImage(int imageToShow)
@@ -58,22 +63,27 @@ public class SentinelHealthBar : MonoBehaviour
 
         if (how_many_hearts == 5)
         {
+            healthbarRectangle.enabled = true;
             ShowImage(0);
         }
         else if (how_many_hearts == 4)
         {
+            healthbarRectangle.enabled = true;
             ShowImage(1);
         }
         else if (how_many_hearts == 3)
         {
+            healthbarRectangle.enabled = true;
             ShowImage(2);
         }
         else if (how_many_hearts == 2)
         {
+            healthbarRectangle.enabled = true;
             ShowImage(3);
         }
         else if (how_many_hearts == 1)
         {
+            healthbarRectangle.enabled = true;
             ShowImage(4);
         }
         else

@@ -17,6 +17,7 @@ public class SentinelLife : MonoBehaviour
     [SerializeField] private Behaviour[] components;
 
     [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip hurtSound;
 
     public int remainingHealth { get; private set; }
     private BoxCollider2D boss_collider;
@@ -44,6 +45,7 @@ public class SentinelLife : MonoBehaviour
 
         if (remainingHealth > 0) // if the boss still has hp
         {
+            SoundManager.instance.PlaySound(hurtSound);
             StartCoroutine(iFramesActivation());
         }
         else if (remainingHealth == 0) // if it is time for the boss to be eliminated
